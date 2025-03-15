@@ -1,26 +1,23 @@
-def analyze_empty_file(file_path):
-    with open(file_path, 'rb') as f:
-        lines = f.readlines()
+def vigenere_decrypt(ciphertext, key):
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    decrypted_text = ""
+    key = key.lower()
+    key_length = len(key)
     
-    line_count = len(lines)
-    print(f"Number of lines: {line_count}")
-    
-    for i, line in enumerate(lines, start=1):
-        if line.strip():  # Check if there's anything that isn't just whitespace
-            print(f"Line {i} has data: {line}")
+    for i, char in enumerate(ciphertext):
+        if char in alphabet:
+            shift = alphabet.index(key[i % key_length])
+            decrypted_char = alphabet[(alphabet.index(char) - shift) % 26]
+            decrypted_text += decrypted_char
         else:
-            print(f"Line {i} is empty.")
+            decrypted_text += char  # Keep non-alphabet characters unchanged
     
-    # Hypothetical further analysis, such as converting hex to text if you find data:
-    # for line in lines:
-    #     if line.strip():
-    #         try:
-    #             print(bytes.fromhex(line.strip()).decode())
-    #         except ValueError:
-    #             pass
+    return decrypted_text
 
-# Replace "path/to/your/file" with the actual file path you want to analyze.
-analyze_empty_file("evident.txt")
+# Given encrypted text and key
+ciphertext = "wfwassucqvr"
+key = "ErenEgiv"
 
-
-
+# Run decryption
+decrypted_message = vigenere_decrypt(ciphertext, key)
+print("Decrypted message:", decrypted_message)
