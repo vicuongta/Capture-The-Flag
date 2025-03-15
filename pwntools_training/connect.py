@@ -5,7 +5,7 @@ from pwn import *
 
 # The ssh function lets us create a connection to an SSH server. We can specify the username, hostname, port, and password.
 # IMPORTANT: You MUST specify the raw=True parameter for our SSH challenges, otherwise pwntools will not work!
-connection = ssh("connect", "localhost", 10101, "ctf2025!", raw=True)
+connection = ssh("connect", "pwntools-training.ctf.umanitobacssa.ca", 10101, "ctf2025!", raw=True)
 
 # Then we can get a pipe to talk to the server with using the .shell() method.
 io = connection.shell()
@@ -29,6 +29,7 @@ while True:
     nextLine = io.recvline().decode()
     print(nextLine, end="")
     if "+" in nextLine:
+        num1, op, num2 = nextLine.split()
         break
 
 # Now we have the line with the math problem, we need to parse it.
@@ -39,11 +40,11 @@ while True:
 # Add to or modify the code below to parse the line and get the two numbers
 
 ###############################################
-number1Text = "0"
-number2Text = "0"
+number1Text = num1
+number2Text = num2
 
-number1 = 0
-number2 = 0
+number1 = int(number1Text)
+number2 = int(number2Text)
 
 result = number1 + number2
 ###############################################
